@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ogyatch.com</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script defer src="/js/scripts.js"></script>
+</head>
+
+<body>
+    <div class="page-container">
+        <main>
+            <div class="content-area">
+                <p>#Blender</p>
+                <h1>UIアニメーションのBlenderレンダリング設定</h1>
+                <img src="/img/blog/optimized-rendering-for-ui-animation-hero.png" width="1400" height="auto">
+
+                <p lang="ja">
+                    BlenderとAfter Effectsを組み合わせてUIアニメーションを制作する場合、特にBlenderでの3D部分のレンダリング時間が作業全体のボトルネックになります。この記事では、Blenderで効率よくレンダリングしながら高品質な結果を得るための設定を紹介します。
+                </p>
+
+                <h2>1. EEVEE vs Cycles: 最短のレンダリング時間を目指すならEEVEE</h2>
+                <img src="/img/blog/optimized-rendering-for-ui-animation-2.png" width="1400" height="auto">
+                <p lang="ja">
+                    UIアニメーションや比較的シンプルな3D表現では、Blenderのレンダリングエンジンとして「EEVEE」を選ぶことが最も効率的です。<br><br>
+                    <strong>1. レンダリング時間の差</strong><br>例えば、私のMac Studio(Apple M1 Max)で2000フレームのアニメーションをレンダリングする場合、EEVEEなら40分程度で完了するのに対し、Cyclesでは約8時間かかります。特に、シンプルなUIアニメーションでは、EEVEEのリアルタイムレンダリングがクオリティと効率のバランスを取る上で非常に有利です。<br>
+                    <strong>2. EEVEEが向いている理由</strong><br>UIアニメーションでは、フォトリアルな質感や複雑なライティングは必要ないことが多く、EEVEEの高速なシェーディングと十分なビジュアル表現が適しています。特に、3Dと2Dを組み合わせた動きのあるUI要素を作る場合、EEVEEのパフォーマンスが大きな助けになります。<br>
+                </p>
+
+                <h2>2. Cyclesのレンダリング時間を短縮するための設定</h2>
+                <img src="/img/blog/optimized-rendering-for-ui-animation-1.png" width="1400" height="auto">
+                <p lang="ja">
+                    ただし、よりリアルなライティングや物理シミュレーションを使いたい場合は、Cyclesを使う必要があることもあります。Cyclesは物理ベースのリアルな表現が可能ですが、レンダリングに時間がかかるというデメリットがあります。ここでは、Cyclesのレンダリング時間を短縮しつつ、クオリティを維持するための具体的な設定を紹介します：<br><br>
+                    <strong>レンダーエンジン：</strong>Cycles<br>
+                    <strong>ノイズしきい値：</strong>0.1（ノイズしきい値を高めることで、サンプリング数を減らしつつも適切な品質を保つ。）<br>
+                    <strong>最大サンプル数：</strong>64（高すぎるサンプル数は不要。64で十分な品質が得られるケースが多い。）<br>
+                    <strong>最小サンプル数：</strong>16（最小サンプルを低めに設定することで、必要以上に細かいレンダリングを避ける。）<br>
+                    <strong>ライトパスの設定：</strong>ライトパスは、レンダリングにかかる計算量を左右するため、できるだけシンプルに保つのがポイントです。ガラスや透明素材を含むシーンの場合の基本設定は次の通りです：<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<strong>合計：</strong>6<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<strong>ディフューズ：</strong>1<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<strong>光沢：</strong>2<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<strong>伝播：</strong>2<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<strong>ボリューム：</strong>0<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<strong>透過：</strong>3<br>
+                    <br>
+                    これらの設定は、ライティングが複雑になりすぎないUIアニメーションには十分対応できます。特に、ガラスや透明オブジェクトが含まれる場合は、透過の値を少し高めに設定することでリアルな表現を保ちます。
+                </p>
+                
+                <h2>3. おすすめのハイブリッドなワークフロー</h2>
+                <p lang="ja">
+                    <strong>EEVEEでプレビュー & Cyclesで最終レンダリング</strong><br>基本的に作業のプロセス中はEEVEEでリアルタイムのプレビューを行い、最終的な質感やライティングが重要なシーンだけをCyclesで高品質にレンダリングするという方法もおすすめです。これにより、作業時間を大幅に短縮しながら、必要な部分でクオリティを担保できます。<br>
+                </p>
+
+                <h2>まとめ</h2>
+                <p lang="ja">
+                    UIアニメーションとBlenderの3D表現を組み合わせた作品作りでは、最終的な質感や時間の制約に応じて、EEVEEとCyclesを使い分けることが大切です。UIアニメーションの場合、EEVEEが多くのケースで最適ですが、フォトリアルな表現が求められるシーンではCyclesを活用しつつ、効率的なレンダリング設定を行いましょう。
+                </p>
+
+            </div>
+        </main>
+    </div>
+
+    <div id="header-container"></div>
+	<script>
+		fetch('header.html')
+			.then(response => response.text())
+			.then(data => {
+				document.getElementById('header-container').innerHTML = data;
+			});
+	</script>
+
+	<div id="footer-placeholder"></div>
+	<script>
+		fetch('footer.html')
+			.then(response => response.text())
+			.then(html => {
+				document.getElementById('footer-placeholder').innerHTML = html;
+			});
+	</script>
+    
+</body>
+</html>
