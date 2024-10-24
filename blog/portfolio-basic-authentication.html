@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ogyatch.com</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script defer src="/js/scripts.js"></script>
+</head>
+
+<body>
+    <div class="page-container">
+        <main>
+            <div class="content-area">
+                <p>#GitHubPages #Squarespace #Cloudflare</p>
+                <h1>GitHub PagesでホストしているポートフォリオサイトにBASIC認証をつける</h1>
+                <img src="/img/blog/portfolio-basic-authentication-hero.png" width="1400" height="auto">
+
+                <p lang="ja">
+                    ポートフォリオサイトをGitHub Pagesで公開する場合、静的サイトであってもセキュリティ面を考慮することが重要です。特に、未公開のポートフォリオをクライアントや特定の人にだけ見せたい場合、BASIC認証を使うことで簡単なパスワード保護を設定できます。この記事では、Squarespaceでドメインを管理し、Cloudflareを利用して無料でBASIC認証を付ける方法について解説します。
+                </p>
+                <p lang="ja">
+                    使用するツール・サービス<br>
+                    <strong>GitHub Pages：</strong>ポートフォリオの静的サイトをホスティング<br>
+                    <strong>Squarespace：</strong>ドメイン管理<br>
+                    <strong>Cloudflare：</strong>無料でBASIC認証を実装<br>
+                    <strong>Cloudflare Worker：</strong>BASIC認証のロジックを処理<br>
+                </p>
+
+                <h2>1. Cloudflareアカウントの作成とドメインの追加</h2>
+                <img src="/img/blog/portfolio-basic-authentication-1.png" width="1400" height="auto">
+                <p lang="ja">
+                    まず、Cloudflareでアカウントを作成し、管理しているドメインを追加します。<br><br>
+                    <strong>Cloudflareにサインアップ</strong><br>
+                    <a href="https://www.cloudflare.com">Cloudflareの公式サイト</a>からサインアップします。アカウントを作成したら、Cloudflareのダッシュボードにアクセスできます。<br><br>
+                    <strong>ドメインを追加</strong><br>
+                    ダッシュボードで「Add a Site」ボタンをクリックし、Squarespaceで管理しているドメインを入力します。Cloudflareがそのドメインの情報をスキャンして表示するので、次に進みます。<br><br>
+                </p>
+
+                <h2>2. ネームサーバーの変更</h2>
+                <img src="/img/blog/portfolio-basic-authentication-2.png" width="1400" height="auto">
+                <img src="/img/blog/portfolio-basic-authentication-3.png" width="1400" height="auto">
+                <p lang="ja">
+                    次に、Squarespaceのドメイン設定で、Cloudflareが指定したネームサーバーに変更する必要があります。<br><br>
+                    <strong>Squarespaceのドメイン管理にログイン</strong><br>
+                    Squarespaceのダッシュボードにログインし、該当するドメインの設定画面に移動します。<br><br>
+                    <strong>ネームサーバーをCloudflareに変更</strong><br>
+                    ネームサーバー（NSレコード）の設定を開き、Cloudflareが指定したネームサーバーに変更します。これにより、ドメインのDNS管理がCloudflare側に切り替わります。変更が反映されるまでには、通常24〜48時間かかります。<br><br>
+                </p>
+
+                <h2>3. CloudflareでのDNS設定</h2>
+                <img src="/img/blog/portfolio-basic-authentication-4.png" width="1400" height="auto">
+                <p lang="ja">
+                    DNSの管理がCloudflareに切り替わったら、GitHub Pagesを指すAレコードやCNAMEレコードを設定します。<br><br>
+                    <strong>DNS設定画面に移動</strong><br>
+                    Cloudflareダッシュボードの「DNS」タブから、ポートフォリオサイトのDNS設定を行います。<br><br>
+                    <strong>GitHub PagesのCNAMEレコードを追加</strong><br>
+                    GitHub Pagesのカスタムドメインを利用している場合、CNAMEレコードを設定して、GitHubのホスティング先（通常username.github.io）を指すようにします。<br><br>
+                    <strong>確認</strong><br>
+                    正しく設定ができている場合、ブラウザでカスタムドメインにアクセスすると、GitHub Pagesにホストされているサイトが表示されます。<br><br>
+                </p>
+
+                <h2>4. Cloudflare Workerの作成と設定</h2>
+                <img src="/img/blog/portfolio-basic-authentication-5.png" width="1400" height="auto">
+                <p lang="ja">
+                    次に、Cloudflare Workerを使ってBASIC認証を実装します。<br><br>
+                    <strong>Workerを作成</strong><br>
+                    Cloudflareダッシュボードの「Workers & Pages」タブの「Overview」に移動し、「Create Worker」ボタンをクリックします。これで新しいWorkerを作成できます。<br><br>
+                    <strong>BASIC認証スクリプトの追加</strong><br>
+                    以下のコードをWorkerに追加します。このコードは、BASIC認証を実装するJavaScriptです。USERNAMEとPASSWORDを、実際に使用したい認証情報に置き換えてください。これにより、アクセスする際にユーザー名とパスワードの入力を求めるようになります。<br>
+                    <script src="https://gist.github.com/ogyatch/c34c2b3f93269900f85d27a4d6939c27.js"></script><br><br>
+                    <strong>保存とデプロイ</strong><br>
+                    スクリプトを保存し、デプロイします。デプロイが完了すると、BASIC認証が設定された状態でWorkerが動作します。<br><br>
+                </p>
+
+                <h2>5. Workerをサイトに適用</h2>
+                <img src="/img/blog/portfolio-basic-authentication-6.png" width="1400" height="auto">
+                <p lang="ja">
+                    最後に、作成したWorkerをポートフォリオサイトに適用します。<br><br>
+                    <strong>ルートパスに適用</strong><br>
+                    Cloudflareダッシュボードの「Workers & Pages」タブで、作成したWorkerを選択し、適用するドメインのルートパス（例：yourdomain.com/*）に対してWorkerを割り当てます。<br><br>
+                    <strong>確認</strong><br>
+                    カスタムドメインにアクセスして、BASIC認証が正しく動作しているか確認します。ブラウザに認証ダイアログが表示され、正しいユーザー名とパスワードを入力するとサイトにアクセスできます。<br><br>
+                </p>
+
+                <h2>まとめ</h2>
+                <p lang="ja">
+                    GitHub Pagesで公開しているポートフォリオサイトにBASIC認証を付けることで、限られた人にのみアクセスを許可できます。この方法は、Squarespaceでドメインを管理している場合でも、Cloudflareを使って手軽にセキュリティを向上させる手段として便利です。Cloudflare Workerを使ったBASIC認証は、無料かつ簡単に設定できるため、非公開のプロジェクトや特定のクライアント向けのポートフォリオには特におすすめです。
+                </p>
+
+            </div>
+        </main>
+    </div>
+
+    <div id="header-container"></div>
+	<script>
+		fetch('header.html')
+			.then(response => response.text())
+			.then(data => {
+				document.getElementById('header-container').innerHTML = data;
+			});
+	</script>
+
+	<div id="footer-placeholder"></div>
+	<script>
+		fetch('footer.html')
+			.then(response => response.text())
+			.then(html => {
+				document.getElementById('footer-placeholder').innerHTML = html;
+			});
+	</script>
+    
+</body>
+</html>
