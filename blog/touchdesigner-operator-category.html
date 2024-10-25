@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ogyatch.com</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script defer src="/js/scripts.js"></script>
+</head>
+
+<body>
+    <div class="page-container">
+        <main>
+            <div class="content-area">
+                <p>#TouchDesigner</p>
+                <h1>TouchDesignerのオペレーターカテゴリと使用例</h1>
+                <img src="/img/blog/touchdesigner-operator-category-hero.png" width="1400" height="auto">
+
+                <p lang="ja">
+                    TouchDesignerの基本的なオペレーターカテゴリと使用例についてまとめました。
+                </p>
+
+                <h2>1. COMP（Component Operator）</h2>
+                <p lang="ja">
+                    COMPオペレーターは、複数のオペレーターをコンテナとしてグループ化し、全体構成やエフェクトを整理・再利用するための「箱」として機能します。<br><br>
+                    <strong>使用例</strong><br>
+                    複雑な3Dシーンを作る際に、「Geometry COMP」を使って複数の3Dモデルをまとめ、カメラやライトを別のCOMPに格納して管理。さらに、UI要素を「Panel COMP」で構築し、配置調整を簡単に行えます。。<br>
+                </p>
+
+                <h2>2. TOP（Texture Operator）</h2>
+                <p lang="ja">
+                    TOPオペレーターは画像や動画処理を担当。リアルタイムエフェクトの追加、色調整、フィルター加工など、2Dグラフィックスの処理に優れています。<br><br>
+                    <strong>使用例</strong><br>
+                    Blur TOPで画像のぼかし効果を追加。<br>
+                    Level TOPで明るさやコントラストを調整。<br>
+                    Composite TOPを使い、複数のテクスチャを合成して背景やエフェクトを作成。<br>
+                    Movie File In TOPで動画を取り込み、必要部分だけを「Crop TOP」で切り出して動きを演出。<br>
+                </p>
+
+                <h2>3. CHOP（Channel Operator）</h2>
+                <p lang="ja">
+                    CHOPオペレーターは、音楽やセンサーのデータなど、時間軸に沿って変化するデータを扱います。これにより、インタラクティブで音に反応するアニメーションを作成可能。<br><br>
+                    <strong>使用例</strong><br>
+                    Audio File In CHOPで音楽を読み込み、ビートに連動したアニメーションを生成。<br>
+                    LFO CHOPでサイン波を生成し、ゆるやかなエフェクトを作成。<br>
+                    Keyboard In CHOPでキー入力によるインタラクション（キーを押すとオブジェクトが回転するなど）を実現。<br>
+                </p>
+
+                <h2>4. SOP（Surface Operator）</h2>
+                <p lang="ja">
+                    SOPオペレーターは3Dオブジェクトの生成と加工を行います。立方体や球体など基本形状から、ノイズや変形を加えた複雑な構造も作成できます。<br><br>
+                    <strong>使用例</strong><br>
+                    Box SOPやSphere SOPで立体を作り、動きを付けてアニメーション化。<br>
+                    Noise SOPで不規則な形状を加え、自然な質感を持たせる。<br>
+                    Transform SOPを使ってオブジェクトの位置や回転を変更し、視覚効果を追加。<br>
+                    パーティクルシステムと組み合わせ、壊れる形状や爆発するオブジェクトの表現も可能。<br>
+                </p>
+
+                <h2>5. MAT（Material Operator）</h2>
+                <p lang="ja">
+                    MATオペレーターは3Dオブジェクトに質感を設定します。色や反射、透過の指定により、現実的な質感表現を可能にします。<br><br>
+                    <strong>使用例</strong><br>
+                    Phong MATで金属的な反射のあるオブジェクトを表現。<br>
+                    PBR MATでガラスやプラスチックのようなリアルな質感を再現。<br>
+                    Constant MATで影のないフラットな色を付け、アニメーションのプレゼンなどに最適化。<br>
+                    他のTOPと組み合わせて、質感に動的なエフェクトを追加することも可能です。<br>
+                </p>
+
+                <h2>6. DAT（Data Operator）</h2>
+                <p lang="ja">
+                    DATオペレーターはスクリプトやテーブルデータを扱うためのもの。Pythonスクリプトを使って、ロジックやインタラクションを定義する際に使用されます。<br><br>
+                    <strong>使用例</strong><br>
+                    Table DATで数値やテキストを表形式で管理し、他のオペレーターにデータを提供。<br>
+                    Text DATでPythonスクリプトを記述し、複雑な処理を実装。<br>
+                    Web DATでリアルタイム情報（天気や株価など）を外部から取得して表示。<br>
+                    プロジェクト全体で共通の変数を定義し、他のオペレーターからアクセス可能に。<br>
+                </p>
+
+                <h2>7. Custom</h2>
+                <p lang="ja">
+                    Customオペレーターを使うと、独自のUIやパラメータコントロールを設定できます。操作性を向上させ、TouchDesignerを使ったインタラクティブなプロジェクトに最適です。<br><br>
+                    <strong>使用例</strong><br>
+                    Parameter COMPでプロジェクト固有のスライダーやボタンを作成し、操作性を簡単に。<br>
+                    カメラ位置やオブジェクト色などを外部UIからリアルタイムに調整可能。<br>
+                    展示やインスタレーション向けにユーザーが操作しやすいUIを構築。<br>
+                </p>
+
+                <h2>まとめ</h2>
+                <p lang="ja">
+                    TouchDesignerは、これらのオペレーターを自由に組み合わせて、データフローを視覚的に構築できるため、インタラクティブでリアルタイムな映像作品のプロトタイピングがしやすい環境です。<br><br>
+                </p>
+
+            </div>
+        </main>
+    </div>
+
+    <div id="header-container"></div>
+	<script>
+		fetch('header.html')
+			.then(response => response.text())
+			.then(data => {
+				document.getElementById('header-container').innerHTML = data;
+			});
+	</script>
+
+	<div id="footer-placeholder"></div>
+	<script>
+		fetch('footer.html')
+			.then(response => response.text())
+			.then(html => {
+				document.getElementById('footer-placeholder').innerHTML = html;
+			});
+	</script>
+    
+</body>
+</html>
