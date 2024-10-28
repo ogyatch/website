@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ogyatch.com</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script defer src="/js/scripts.js"></script>
+</head>
+
+<body>
+    <div class="page-container">
+        <main>
+            <div class="content-area">
+                <p>#TouchDesigner</p>
+                <h1>Touch Designerで画像を回転させる</h1>
+                <img src="/img/blog/touchdesigner-tutorial-rotate-hero.png" width="1400" height="auto">
+
+                <p lang="ja">
+                    TouchDesignerで画像を回転させるための手順を解説します。このチュートリアルを通して、LFO CHOP（Low Frequency Oscillator）を利用して自動的に画像が回転するエフェクトを作ることができます。
+                </p>
+
+                <h2>1. Movie File In TOPで画像を読み込む</h2>
+                <p lang="ja">
+                    Movie File In TOPを選び、好きな画像ファイルを読み込みます。これでTouchDesigner内で画像を扱えるようになります。<br><br>
+                </p>
+                <img src="/img/blog/touchdesigner-tutorial-rotate-1.png" width="1400" height="auto">
+
+                <h2>2. Transform TOPに接続する</h2>
+                <p lang="ja">
+                    読み込んだ画像をTransform TOPに接続します。Transform TOPは画像の位置やスケール、回転を制御するオペレーターです。<br><br>
+                </p>
+                <img src="/img/blog/touchdesigner-tutorial-rotate-2.png" width="1400" height="auto">
+
+                <h2>3. LFO CHOPを追加</h2>
+                <p lang="ja">
+                    LFO CHOPを新しく追加し、波形による値の変動を作成します。このオペレーターで、回転を制御するための継続的な数値変動を生成します。LFO CHOPのTypeパラメータを「Ramp」に設定します。Rampは0から1までの値を繰り返す波形を生成します。これにより、滑らかで連続した回転が実現できます。<br><br>
+                </p>
+                <img src="/img/blog/touchdesigner-tutorial-rotate-3.png" width="1400" height="auto">
+
+                <h2>4. Trail CHOPを追加し、LFO CHOPに接続（オプション）</h2>
+                <p lang="ja">
+                    Trail CHOPを追加し、LFO CHOPに接続します。Trail CHOPを使用すると、LFO CHOPの動作をグラフとして観察できるので、変動の仕方を視覚的に確認するのに役立ちます。<br><br>
+                </p>
+                <img src="/img/blog/touchdesigner-tutorial-rotate-4.png" width="1400" height="auto">
+
+                <h2>5. Math CHOPを作成し、LFO CHOPから接続</h2>
+                <p lang="ja">
+                    Math CHOPを新規作成し、LFO CHOPから接続します。Math CHOPは数値範囲の変換など、数値に対する操作を行うオペレーターです。Math CHOPの「To Range」を「0から360」に設定します。これにより、LFO CHOPの出力（0から1の範囲）を0から360度の回転角度にマッピングできます。<br><br>
+                </p>
+                <img src="/img/blog/touchdesigner-tutorial-rotate-5.png" width="1400" height="auto">
+
+                <h2>6. Null CHOPを作成し、Math CHOPから接続</h2>
+                <p lang="ja">
+                    Null CHOPを作成し、Math CHOPから接続します。Null CHOPは他のCHOPの数値を安定的に出力するオペレーターで、エクスポートや参照用の最終地点として便利です。<br><br>
+                </p>
+                <img src="/img/blog/touchdesigner-tutorial-rotate-6.png" width="1400" height="auto">
+
+                <h2>7. Null CHOPのエクスポート用の設定</h2>
+                <p lang="ja">
+                    Null CHOPの右下にある「+」ボタンをクリックして、エクスポート可能な状態にします。この設定で、Null CHOPの数値を他のオペレーターにドラッグ&ドロップでエクスポートできるようになります。<br><br>
+                </p>
+                <img src="/img/blog/touchdesigner-tutorial-rotate-7.png" width="1400" height="auto">
+
+                <h2>8. Transform TOPのRotateにエクスポート</h2>
+                <p lang="ja">
+                    Null CHOPの数値を、Transform TOPのRotateパラメータにドラッグ&ドロップします。ドロップ後、「Export CHOP」を選択することで、Null CHOPの出力がTransform TOPの回転に適用され、LFO CHOPによる自動回転が反映されます。<br><br>
+                </p>
+                <img src="/img/blog/touchdesigner-tutorial-rotate-8.png" width="1400" height="auto">
+
+                <h2>9. Null TOPを作成し、Transform TOPから接続</h2>
+                <p lang="ja">
+                    最後に、Null TOPを作成し、Transform TOPから接続します。Null TOPはビジュアルチェーンの最後に置くことで、他の操作や表示用に便利です。<br><br>
+                </p>
+                <img src="/img/blog/touchdesigner-tutorial-rotate-9.png" width="1400" height="auto">
+
+                <h2>補足説明：なぜLFO CHOPとMath CHOPを使用するのか？</h2>
+                <p lang="ja">
+                    LFO CHOPは、回転のアニメーションに必要な継続的な数値変動を簡単に作成できます。これにより、手動で角度を変更する手間が省け、スムーズなループ回転が可能です。<br>
+                    Math CHOPを挟むことで、LFOの出力範囲（0〜1）を回転に適した範囲（0〜360度）に変換できます。こうすることで、より直感的な回転コントロールが実現します。<br><br>
+                </p>
+
+            </div>
+        </main>
+    </div>
+
+    <div id="header-container"></div>
+	<script>
+		fetch('header.html')
+			.then(response => response.text())
+			.then(data => {
+				document.getElementById('header-container').innerHTML = data;
+			});
+	</script>
+
+	<div id="footer-placeholder"></div>
+	<script>
+		fetch('footer.html')
+			.then(response => response.text())
+			.then(html => {
+				document.getElementById('footer-placeholder').innerHTML = html;
+			});
+	</script>
+    
+</body>
+</html>
