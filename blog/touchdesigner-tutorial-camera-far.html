@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ogyatch.com</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script defer src="/js/scripts.js"></script>
+</head>
+
+<body>
+    <div class="page-container">
+        <main>
+            <div class="content-area">
+                <p>#TouchDesigner</p>
+                <h1>Touch DesignerのCamera COMPでオブジェクトを小さく表示する</h1>
+                <img src="/img/blog/touchdesigner-tutorial-camera-far-hero.png" width="1400" height="auto">
+
+                <p lang="ja">
+                    TouchDesignerでCamera COMPを使い、対象物を小さく表示するときに注意が必要なポイントについて解説します。
+                </p>
+
+                <h2>1. オブジェクトが消える原因：「Near（近クリップ）」と「Far（遠クリップ）」設定</h2>
+                <p lang="ja">
+                    TouchDesignerのCamera COMPには「Near（近クリップ）」と「Far（遠クリップ）」と呼ばれる設定があります。これらの設定は、カメラに映る範囲を制限する「クリッピング範囲」を指定しており、この範囲外のオブジェクトは表示されなくなります。<br><br>
+                </p>
+                <img src="/img/blog/touchdesigner-tutorial-camera-far-2.png" width="1400" height="auto">
+
+                <h2>2. Farクリップの値を調整して表示範囲を広げる</h2>
+                <p lang="ja">
+                    解決方法として、Camera COMPの「Far」の値を大きくすることが効果的です。デフォルト設定ではスライダーでの最大値は1000ですが、スライダーだけでなく、キーボード入力で直接値を設定することも可能です。例えば、Farクリップの値を5000やそれ以上に設定することで、クリッピング範囲が拡大し、対象物が見えるようになります。<br><br>
+                    <strong>具体的な手順</strong><br>
+                    1. Camera COMPのパラメータパネルを開きます。<br>
+                    1. Viewタブに移動し、Farの項目を確認します。<br>
+                    1. キーボードで直接「5000」などの値を入力します。<br>
+                    <br>
+                </p>
+                <img src="/img/blog/touchdesigner-tutorial-camera-far-3.png" width="1400" height="auto">
+
+                <h2>まとめ</h2>
+                <p lang="ja">
+                    TouchDesignerで対象物を小さく表示しようとするとき、Camera COMPの「Far」クリップ設定をうまく活用することがポイントです。スライダーの制限を突破して、5000などの大きな数値を直接入力することで、クリッピング範囲が広がり、視覚的に自然なスケール感でオブジェクトを表示できます。<br><br>
+                </p>
+
+            </div>
+        </main>
+    </div>
+
+    <div id="header-container"></div>
+	<script>
+		fetch('header.html')
+			.then(response => response.text())
+			.then(data => {
+				document.getElementById('header-container').innerHTML = data;
+			});
+	</script>
+
+	<div id="footer-placeholder"></div>
+	<script>
+		fetch('footer.html')
+			.then(response => response.text())
+			.then(html => {
+				document.getElementById('footer-placeholder').innerHTML = html;
+			});
+	</script>
+    
+</body>
+</html>
